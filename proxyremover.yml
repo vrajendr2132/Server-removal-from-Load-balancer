@@ -1,0 +1,25 @@
+- name: Find proxy
+  hosts: loadbalancer
+  remote_user: username
+  gather_facts: no
+  become: yes
+  become_user: root
+  tasks:
+    - name: get proxy ip
+      shell: ipvsadm -lnc | grep <IP> | awk '{print $6}' | cut -d ':' -f 1
+      register: result
+      args:
+        warn: no
+
+    - debug:
+       var: result.stdout_lines.1
+
+    - name: remove proxy
+      shell: ipvsadm -d -f 257 -r {{ result.stdout_lines.1 }}
+      register: removed
+
+    - debug:
+       var: removed.stdout_lines
+
+
+
