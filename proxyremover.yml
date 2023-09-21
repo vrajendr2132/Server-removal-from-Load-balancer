@@ -5,7 +5,7 @@
   become: yes
   become_user: root
   tasks:
-    - name: get proxy ip
+    - name: get server ip
       shell: ipvsadm -lnc | grep <IP> | awk '{print $6}' | cut -d ':' -f 1
       register: result
       args:
