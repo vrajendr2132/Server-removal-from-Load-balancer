@@ -1,4 +1,4 @@
-- name: Find proxy
+- name: Find server
   hosts: loadbalancer
   remote_user: username
   gather_facts: no
